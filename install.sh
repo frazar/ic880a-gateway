@@ -123,7 +123,7 @@ popd
 
 # Build packet forwarder
 if [ ! -d packet_forwarder ]; then
-    git clone https://github.com/kersing/packet_forwarder.git
+    git clone --depth 1 -b implement_gps_time-fake https://github.com/frazar/packet_forwarder.git
     pushd packet_forwarder
 else
     pushd packet_forwarder
