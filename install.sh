@@ -74,7 +74,9 @@ pushd "$INSTALL_DIR"
 
 # Build LoRa gateway app
 if [ ! -d lora_gateway ]; then
-    git clone https://github.com/Lora-net/lora_gateway.git --depth 1
+    git clone --depth 1 https://github.com/Lora-net/lora_gateway.git
+else
+    echo "WARNING: Using cached 'lora_gateway' repo. Delete the 'lora_gateway' folder to force a refresh."
 fi
 pushd lora_gateway
 
@@ -86,7 +88,9 @@ popd
 
 # Build packet forwarder
 if [ ! -d packet_forwarder ]; then
-    git clone -b add_fake_gps_time https://github.com/frazar/packet_forwarder.git --depth 1
+    git clone  --depth 1 --branch add_fake_gps_time https://github.com/frazar/packet_forwarder.git    
+else
+    echo "WARNING: Using cached 'packet_forwarder' repo. Delete the 'packet_forwarder' folder to force a refresh."
 fi
 pushd packet_forwarder
 
@@ -103,7 +107,6 @@ cp ./packet_forwarder/lora_pkt_fwd/global_conf.json ./bin/global_conf.json
 popd
 
 # Copy service files
-echo $(pwd)
 sed -i -e "s/INSTALL_DIR=\/home\/pi\/ttn-gateway/INSTALL_DIR=${INSTALL_DIR////\\/}/g" ./start.sh
 cp ./start.sh "$INSTALL_DIR/bin/"
 
